@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements DetecteurDeClicSu
     private MonRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     CoordinatorLayout mcoordinatorLayout;
+    Donnee donnee = new Donnee(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +31,7 @@ public class MainActivity extends AppCompatActivity implements DetecteurDeClicSu
 
         //Exercice 1 on remplace la ligne créant le LayoutManager
         //mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager=new GridLayoutManager(this,2, GridLayoutManager.VERTICAL, false);
-        ((GridLayoutManager)mLayoutManager) .setSpanSizeLookup(
-                new GridLayoutManager.SpanSizeLookup() {
-
-                    @Override
-                    public int getSpanSize(int arg0) {
-                        return (arg0 % 3) == 0 ? 2 : 1;
-                    }
-                });
+        mLayoutManager=new LinearLayoutManager(this,GridLayoutManager.VERTICAL, false);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MonRecyclerViewAdapter(getDataSource());
@@ -53,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements DetecteurDeClicSu
 
     private ArrayList<Donnee> getDataSource() {
         ArrayList results = new ArrayList<Donnee>();
-        for (int index = 0; index < 20; index++) {
-            Donnee obj = new Donnee("Texte principal " + index,"Texte auxiliaire " + index);
+        for (int index = 0; index < donnee.taillePlanetes.length; index++) {
+            Donnee obj = new Donnee(donnee.planet[index] ,donnee.taillePlanetes[index], donnee.image[index]);
             results.add(index, obj);
         }
         return results;
@@ -68,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements DetecteurDeClicSu
 
 
     public void clicSurRecyclerItem(int position, View v) {
-        Snackbar.make(mcoordinatorLayout, " Clic sur l'item " + position, Snackbar.LENGTH_LONG).show();
+
+        mcoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        Snackbar.make(mcoordinatorLayout, " Clic sur la planète " + donnee.planet[position], Snackbar.LENGTH_LONG).show();
     }
 }
 

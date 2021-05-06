@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -30,8 +31,9 @@ public class MonRecyclerViewAdapter extends RecyclerView.Adapter<MonRecyclerView
 
     @Override
     public void onBindViewHolder(ConteneurDeDonnee conteneur, int position) {
-        conteneur.tv_principal.setText(donnees.get(position).getPrincipal());
-        conteneur.tv_auxiliaire.setText(donnees.get(position).getAuxiliaire());
+        conteneur.tv_principal.setText(donnees.get(position).getPlanete());
+        conteneur.tv_auxiliaire.setText(donnees.get(position).getTailles());
+        conteneur.img.setImageResource(donnees.get(position).getImages());
     }
 
     @Override
@@ -46,12 +48,14 @@ public class MonRecyclerViewAdapter extends RecyclerView.Adapter<MonRecyclerView
     public static class ConteneurDeDonnee extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_principal;
         TextView tv_auxiliaire;
+        ImageView img;
         private static DetecteurDeClicSurRecycler detecteurDeClicSurRecycler;
 
         public ConteneurDeDonnee(View itemView) {
             super(itemView);
             tv_principal = (TextView) itemView.findViewById(R.id.tv_principal);
             tv_auxiliaire = (TextView) itemView.findViewById(R.id.tv_auxiliaire);
+            img = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
         }
 
